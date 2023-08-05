@@ -13,7 +13,7 @@
   flex-direction: row;
   border-radius: 9px;
   background: #2F2F2F;
-  width: 100%;
+  width: 1140px;
   min-height: 70px;
   position: relative;
 }
@@ -110,7 +110,28 @@
   display: flex;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+@media screen and (max-width: 1035px) {
+  .search {
+    margin: 0 auto;
+    max-width: 980px;
+  }
+  
+  .search__input-conteiner {
+    padding: 10px 0 0 10px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .search__input {
+    width: 600px;
+  }
+
+  .search__checkbox {
+    padding-right: 20px;
+  }
+}
+
+@media screen and (max-width: 800px) {
   .search {
     max-width: 708px;
     padding-top: 75px;
@@ -144,7 +165,7 @@
   }
 }
 
-@media screen and (min-width: 320px) and (max-width: 767px) {
+@media screen and (max-width: 480px) {
   .search {
     max-width: 300px;
     padding-top: 80px;

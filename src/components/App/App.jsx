@@ -18,15 +18,17 @@ function App() {
     <div className="app">
       {pathname === "/" || pathname === "/movies" || pathname === "/saved-movies" || pathname === "/profile" ?
         <Header /> : ""}
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/movies" element={<Movies />} />
-        <Route path="/saved-movies" element={<SavedMovies />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/signup" element={<Register />} />
-        <Route path="/signin" element={<Login />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <main className="main">
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/saved-movies" element={<SavedMovies />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/signup" element={<Register />} />
+          <Route path="/signin" element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </main>
       {pathname === "/" || pathname === "/movies" || pathname === "/saved-movies" ? <Footer /> : ""}
     </div>
   );

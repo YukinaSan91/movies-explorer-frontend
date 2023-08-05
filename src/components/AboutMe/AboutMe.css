@@ -87,7 +87,7 @@
   object-fit: cover;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+@media screen and (max-width: 800px) {
   .about-me {
     padding: 90px 0 91px;
     width: 668px;
@@ -125,7 +125,7 @@
   }
 }
 
-@media screen and (min-width: 320px) and (max-width: 767px) {
+@media screen and (max-width: 480px) {
   .about-me {
     padding: 70px 0;
     width: 292px;
