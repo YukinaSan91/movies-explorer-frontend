@@ -215,7 +215,7 @@
     transition: opacity .7s linear;
   }
   
-  .navigate__burger-menu-open {
+  .navigate__burger-menu-open:hover {
     opacity: .8;
     cursor: pointer;
   }

@@ -3,6 +3,7 @@
   padding: 0;
   max-width: 270px;
   list-style: none;
+  width: 100%;
 }
 
 .card__element {

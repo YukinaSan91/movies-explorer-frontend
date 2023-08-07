@@ -2,6 +2,7 @@
   margin: 0 0 10px 0;
   padding: 69px 0 69px;
   max-width: 1140px;
+  width: 100%;
   display: flex;
   border-bottom: 1px solid #424242;
 }
@@ -13,7 +14,8 @@
   flex-direction: row;
   border-radius: 9px;
   background: #2F2F2F;
-  width: 1140px;
+  max-width: 1140px;
+  width: 100%;
   min-height: 70px;
   position: relative;
 }
@@ -110,12 +112,16 @@
   display: flex;
 }
 
-@media screen and (max-width: 1035px) {
+@media screen and (min-width: 1035px) and (max-width: 1279px) {
   .search {
     margin: 0 auto;
     max-width: 980px;
   }
   
+  .search__form {
+    max-width: 980px;
+  }
+
   .search__input-conteiner {
     padding: 10px 0 0 10px;
     display: flex;
@@ -131,7 +137,45 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (min-width: 950px) and (max-width: 1034px) {
+  .search {
+    margin: 0 auto;
+    max-width: 940px;
+  }
+  
+  .search__form {
+    max-width: 940px;
+  }
+  
+  .search__input {
+    width: 520px;
+  }
+
+  .search__icon {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 801px) and (max-width: 949px) {
+  .search {
+    margin: 0 auto;
+    max-width: 800px;
+  }
+  
+  .search__form {
+    max-width: 800px;
+  }
+  
+  .search__input {
+    width: 400px;
+  }
+
+  .search__icon {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 690px) and (max-width: 800px) {
   .search {
     max-width: 708px;
     padding-top: 75px;
@@ -140,6 +184,7 @@
 
   .search__form {
     min-height: 72px;
+    max-width: 708px;
   }
 
   .search__img {
@@ -155,13 +200,56 @@
   }
 
   .search__icon {
-    right: 188px;
-    top: 36px;
+    display: none;
   }
 
   .search__checkbox {
     padding-left: 40px;
     padding-top: 4px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 690px) {
+  .search {
+    max-width: 680px;
+    padding-top: 75px;
+    padding-bottom: 90px;
+  }
+
+  .search__form {
+    flex-direction: column;
+    min-height: 72px;
+    background: #202020;
+    max-width: 680px;
+  }
+
+  .search__container {
+    border-radius: 9px;
+    background: #2F2F2F;
+    min-height: 72px;
+  }
+
+  .search__input-conteiner {
+    padding-top: 12px;
+    width: 100%;
+  }
+
+  .search__input {
+    width: 280px;
+  }
+
+  .search__btn {
+    margin: 0 10px 0 0;
+  }
+
+  .search__icon {
+    display: none;
+  }
+
+  .search__checkbox {
+    padding-left: 40px;
+    padding-top: 40px;
+    justify-content: center;
   }
 }
 

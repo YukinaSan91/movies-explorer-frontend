@@ -46,6 +46,12 @@
   }
 }
 
+@media screen and (min-width: 481px) and (max-width: 679px) {
+  .promo__logo {
+    max-width: 480px;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .promo__container {
     align-items: center;

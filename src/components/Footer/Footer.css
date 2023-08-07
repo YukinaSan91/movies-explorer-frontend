@@ -5,7 +5,8 @@
   flex-direction: column;
   flex-wrap: nowrap;
   align-items: center;
-  width: 1140px;
+  max-width: 1140px;
+  width: 100%;
 }
 
 .footer__title {
@@ -70,14 +71,14 @@
 
 @media screen and (max-width: 1035px) {
   .footer {
-    width: 980px;
+    max-width: 980px;
     padding-top: 60px;
   }
 }
 
 @media screen and (max-width: 800px) {
   .footer {
-    width: 708px;
+    max-width: 708px;
     padding-top: 60px;
   }
 }
@@ -85,7 +86,7 @@
 @media screen and (max-width: 480px) {
   .footer {
     padding-top: 60px;
-    width: 300px;
+    max-width: 300px;
   }
   .footer__title {
     padding-bottom: 21px;

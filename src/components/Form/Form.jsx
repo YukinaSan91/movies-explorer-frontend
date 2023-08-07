@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import headerLogo from "../../images/logo.svg";
 import "./Form.css";
+import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 
 function Form(props) {
+  const {values, handleChange, errors} = useFormAndValidation();
+
   return (
     <>
       <Link to="/" className="auth__link-logo">
@@ -22,13 +25,15 @@ function Form(props) {
               placeholder="Введите E-mail"
               minLength="8"
               required
+              onChange={handleChange}
+              value={values.email || ""}
             />
-            <span className="input-email-error auth__error" type="text"></span>
+            <span className="input-email-error auth__error" type="text">{errors.email}</span>
           </label>
           <label className="auth__item">
             <p className="auth__text">Пароль</p>
             <input
-              className="auth__input auth__input_type_red"
+              className={`auth__input ${errors.password ? 'auth__input_type_red' : ''}`}
               type="password"
               id="input-password"
               name="password"
@@ -36,8 +41,10 @@ function Form(props) {
               minLength="8"
               maxLength="16"
               required
+              onChange={handleChange}
+              value={values.password || ""}
             />
-            <span className="input-password-error auth__error" type="text"></span>
+            <span className="input-password-error auth__error" type="text">{errors.password}</span>
           </label>
         </div>
       </form></>

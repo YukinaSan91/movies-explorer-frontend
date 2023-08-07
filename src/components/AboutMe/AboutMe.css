@@ -4,7 +4,8 @@
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  width: 1140px;
+  max-width: 1140px;
+  width: 100%;
 }
 
 .about-me__title {
@@ -90,7 +91,7 @@
 @media screen and (max-width: 800px) {
   .about-me {
     padding: 90px 0 91px;
-    width: 668px;
+    max-width: 668px;
   }
 
   .about-me__info {
@@ -128,7 +129,7 @@
 @media screen and (max-width: 480px) {
   .about-me {
     padding: 70px 0;
-    width: 292px;
+    max-width: 292px;
   }
 
   .about-me__title {
