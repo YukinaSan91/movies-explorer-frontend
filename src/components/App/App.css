@@ -1,0 +1,27 @@
+.app {
+    background: #202020;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 1280px;
+    width: 100%;
+    font-family: "Inter", "Arial", "Helvetica", sans-serif;
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+}
+
+@media screen and (max-width: 800px) {
+  .app {
+    max-width: 768px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .app {
+    max-width: 320px;
+  }
+}
