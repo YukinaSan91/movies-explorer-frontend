@@ -34,14 +34,14 @@ function SavedMovies({
       />
       {isLoading ? (
           <Preloader />
-        ) : (notFaund ? (
+        ) : notFaund ? (
           <MoviesCardList
             movies={movies}
             saveMovies={saveMovies}
             filteredSaveMovies={filteredSaveMovies}
             handleDeleteMovie={handleDeleteMovie}
           />
-        ) : (<span className="saved-movies__search-error saved-movies__search-error_margin">{resultMessage}</span>))
+        ) : (<span className="saved-movies__search-error saved-movies__search-error_margin">{resultMessage}</span>)
       }
     </section>
   );

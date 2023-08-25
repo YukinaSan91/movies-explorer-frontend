@@ -18,7 +18,7 @@ function Movies({
   notFaund
 }) {
 
-
+  console.log(notFaund);
   return (
     <section className="movies">
       <SearchForm
