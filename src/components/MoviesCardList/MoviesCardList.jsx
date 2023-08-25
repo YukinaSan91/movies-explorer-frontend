@@ -3,6 +3,18 @@ import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import {
+  MOBILE_WIDTH,
+  LAPTOP_WIDTH,
+  TABLET_WIDTH,
+  SMALL_MOBILE_WIDTH,
+  LARGE_PAGE_CARDS_COUNT,
+  LARGE_NEXT_PAGE_CARDS_COUNT,
+  MEDIUM_PAGE_CARDS_COUNT,
+  MEDIUM_NEXT_PAGE_CARDS_COUNT,
+  SMALL_PAGE_CARDS_COUNT,
+  ADDING_PAGE_AMOUNT
+} from "../../utils/constants";
 
 
 function MoviesCardList({
@@ -20,12 +32,12 @@ function MoviesCardList({
       let newInitialQuantityFilms = 0;
 
       if (pathname === "/movies") {
-        if (width >= 1280) {
-          newInitialQuantityFilms = 16;
-        } else if (width >= 768) {
-          newInitialQuantityFilms = 8;
-        } else if (width >= 280 && width <= 768) {
-          newInitialQuantityFilms = 5;
+        if (width >= LAPTOP_WIDTH) {
+          newInitialQuantityFilms = LARGE_PAGE_CARDS_COUNT;
+        } else if (width >= TABLET_WIDTH) {
+          newInitialQuantityFilms = MEDIUM_PAGE_CARDS_COUNT;
+        } else if (width >= SMALL_MOBILE_WIDTH && width <= TABLET_WIDTH) {
+          newInitialQuantityFilms = SMALL_PAGE_CARDS_COUNT;
         }
       } 
       else {
@@ -47,12 +59,12 @@ function MoviesCardList({
     const width = window.innerWidth;
     let addCards = 0;
 
-    if (width >= 1280) {
-      addCards = 4;
-    } else if (width >= 768) {
-      addCards = 2;
-    } else if (width >= 280 && width <= 480) {
-      addCards = 2;
+    if (width >= LAPTOP_WIDTH) {
+      addCards = LARGE_NEXT_PAGE_CARDS_COUNT;
+    } else if (width >= TABLET_WIDTH) {
+      addCards = MEDIUM_NEXT_PAGE_CARDS_COUNT;
+    } else if (width >= SMALL_MOBILE_WIDTH && width <= MOBILE_WIDTH) {
+      addCards = ADDING_PAGE_AMOUNT;
     }
 
     setInitialQuantityFilms((viewInitialQuantityFilms) => {

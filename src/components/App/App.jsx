@@ -17,7 +17,7 @@ import mainApi from "../../utils/MainApi";
 import filterMovies from "../../utils/utils";
 import moviesApi from "../../utils/MoviesApi";
 import InfoTooltip from "../InfoTooltip/InfoTooltop";
-import { ERROR_VALIDATION_MSG } from '../../utils/constants';
+import { ERROR_VALIDATION_MSG, MAX_DURATION_SHORT_FILM } from '../../utils/constants';
 
 function App() {
   const navigate = useNavigate();
@@ -188,7 +188,7 @@ function App() {
     }
 
     const searchedMovies = filterMovies(searchStr, renderFilms);
-    const searchedShortMovies = searchedMovies.filter((film) => film.duration <= 40);
+    const searchedShortMovies = searchedMovies.filter((film) => film.duration <= MAX_DURATION_SHORT_FILM);
 
       
       if (checkbox) {
@@ -237,7 +237,7 @@ function App() {
       return []
     }
     const searchedMovies = filterMovies(searchSaveStr, saveMovies);
-    const searchedShortMovies = searchedMovies.filter((film) => film.duration <= 40);
+    const searchedShortMovies = searchedMovies.filter((film) => film.duration <= MAX_DURATION_SHORT_FILM);
 
       
       if (saveCheckbox) {
