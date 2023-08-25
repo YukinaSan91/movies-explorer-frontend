@@ -193,6 +193,7 @@ function App() {
       
       if (checkbox) {
         localStorage.setItem("checkbox", checkbox);
+        setIsLoading(true);
         setFilteredMovies(searchedShortMovies);
         if (searchedShortMovies.length === 0) {
           setNotFaund(false);
@@ -202,6 +203,7 @@ function App() {
           setNotFaund(true);
         }
       } else {
+        setIsLoading(true);
         setFilteredMovies(searchedMovies);
         if (searchedMovies.length === 0) {
           setNotFaund(false);
@@ -211,6 +213,9 @@ function App() {
           setNotFaund(true);
         }
       }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000)
   }
 
   const submitHandleAllFilms = (searchStr) => {
@@ -242,6 +247,7 @@ function App() {
       
       if (saveCheckbox) {
         localStorage.setItem("saveCheckbox", saveCheckbox);
+        setIsLoading(true);
         setFilteredSaveMovies(searchedShortMovies);
         if (searchedShortMovies.length === 0) {
           setNotFaund(false);
@@ -251,6 +257,7 @@ function App() {
           setNotFaund(true);
         }
       } else {
+        setIsLoading(true);
         setFilteredSaveMovies(searchedMovies);
         if (searchedMovies.length === 0) {
           setNotFaund(false);
@@ -260,6 +267,9 @@ function App() {
           setNotFaund(true);
         }
       }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000)
   };
 
   const submitHandler = (searchStr) => {
