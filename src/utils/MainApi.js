@@ -12,7 +12,7 @@ class MainApi {
   };
 
   register(name, email, password) {
-    return fetch(`${this._baseUrl}/signup`, {
+    return fetch(`${this._baseUrl}signup`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -24,7 +24,7 @@ class MainApi {
   };
 
   login(email, password) {
-    return fetch(`${this._baseUrl}/signin`, {
+    return fetch(`${this._baseUrl}signin`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -48,7 +48,7 @@ class MainApi {
 
   getUserInfo() {
     const token = localStorage.getItem('token');
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}users/me`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -59,7 +59,7 @@ class MainApi {
   };
 
   getContent(token) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}users/me`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -71,7 +71,7 @@ class MainApi {
 
   editUserProfile(data) {
     const token = localStorage.getItem('token');
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}users/me`, {
       method: 'PATCH',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -87,7 +87,7 @@ class MainApi {
 
   getMovies() {
     const token = localStorage.getItem('token');
-    return fetch(`${this._baseUrl}/movies`, {
+    return fetch(`${this._baseUrl}movies`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -99,7 +99,7 @@ class MainApi {
 
   createMovies(film) {
     const token = localStorage.getItem('token');
-    return fetch(`${this._baseUrl}/movies`, {
+    return fetch(`${this._baseUrl}movies`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -123,7 +123,7 @@ class MainApi {
 
   deleteMovies(_id) {
     const token = localStorage.getItem('token');
-    return fetch(`${this._baseUrl}/movies/${_id}`, {
+    return fetch(`${this._baseUrl}movies/${_id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',
@@ -135,7 +135,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: 'https://api.yukinasan.nomoredomains.xyz',
+  baseUrl: 'https://api.yukinasan.nomoredomains.xyz/',
 });
 
 export default mainApi;
