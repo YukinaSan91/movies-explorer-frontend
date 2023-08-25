@@ -10,7 +10,7 @@ import { ERROR_VALIDATION_MSG } from '../../utils/constants';
 function SearchForm({ onSubmit, handleCheckboxClick, checkbox }) {
   const { pathname } = useLocation();
   const {values, handleChange, isValid, setValues, setIsValid} = useFormAndValidation();
-  const [errorText, setErrorText] = useState("");
+  const [errorText, setErrorText] = useState(false);
 
   useEffect(() => {
     setIsValid(true);
@@ -26,18 +26,12 @@ function SearchForm({ onSubmit, handleCheckboxClick, checkbox }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    //if (values.search === "") {
-      //setErrorText(ERROR_VALIDATION_MSG.SEARCH_FORM_ERROR);
-      //return;
-    //} else {
-      //setErrorText("");
+    if (values.search || "") {
+      setErrorText(false);
       onSubmit(values.search || "");
-    //}
-    //if (isValid) {
-      //onSubmit(values.search || "");
-      //setErrorText("");
-    //}
-    //setErrorText(errors.search);
+    } else {
+      setErrorText(true)
+    }
   };
 
   return (
@@ -57,9 +51,9 @@ function SearchForm({ onSubmit, handleCheckboxClick, checkbox }) {
               onChange={handleChange}
               disabled={!isValid}
             />
-            <span className={`${errorText ? "search__input-error search__input-error_visible " : "search__input-error"}`}>
-              {errorText}
-            </span>
+            {errorText && <span className={`${errorText ? "search__input-error search__input-error_visible " : "search__input-error"}`}>
+              {ERROR_VALIDATION_MSG.SEARCH_FORM_ERROR}
+            </span>}
           </div>
           <button type="submit" className="search__btn" disabled={!isValid}>Найти</button>
         </div>
