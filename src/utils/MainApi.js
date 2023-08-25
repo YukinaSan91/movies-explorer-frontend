@@ -135,7 +135,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: 'api.yukinasan.nomoredomains.xyz',
+  baseUrl: 'https://api.yukinasan.nomoredomains.xyz',
 });
 
 export default mainApi;
