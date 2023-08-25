@@ -15,10 +15,11 @@ function Movies({
   checkbox,
   setCheckbox,
   resultMessage,
-  notFaund
+  resultErrorMessage,
+  notFound
 }) {
 
-  console.log(notFaund);
+  console.log(resultMessage);
   return (
     <section className="movies">
       <SearchForm
@@ -29,14 +30,14 @@ function Movies({
       />
       {isLoading ? (
           <Preloader />
-        ) : (notFaund ? (
+        ) : notFound ? (
           <MoviesCardList
             movies={renderFilms}
             handleSaveFilm={handleSaveFilm}
             handleDeleteMovie={handleDeleteMovie}
             saveMovies={saveMovies}
           />
-      ) : (<span className="movies__search-error movies__search-error_margin">{resultMessage}</span>))
+      ) : (<span className="movies__search-error movies__search-error_margin">{resultErrorMessage || resultMessage}</span>)
     }
     </section>
   );

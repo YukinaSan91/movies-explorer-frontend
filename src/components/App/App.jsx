@@ -38,8 +38,10 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [errorUpdateInfoUser, setErrorUpdateInfoUser] = useState("");
-  const [notFaund, setNotFaund] = useState(true);
+  const [notFound, setNotFound] = useState(true);
+  const [notSaveFound, setNotSaveFound] = useState(true)
   const [resultMessage, setResultMessage] = useState("");
+  const [resultSaveMessage, setResultSaveMessage] = useState("");
   const [resultErrorMessage, setResultErrorMessage] = useState("");
 
   useEffect(() => {
@@ -54,7 +56,7 @@ function App() {
         .getAllInfo()
         .then(([data, film]) => {
           setCurrentUser(data);
-          setSaveMovies(film);
+          setSaveMovies(film.filter((newFilm) => newFilm.owner === currentUser._id));
           setRenderFilms(JSON.parse(localStorage.getItem("allMovies")) || []);
           setSearchStr((localStorage.getItem("searchString")) || "");
           setIsLoading(false);
@@ -66,7 +68,7 @@ function App() {
           setIsLoading(false);
         })
       }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, currentUser._id]);
 
   
   //АВТОРИЗАЦИЯ
@@ -114,10 +116,10 @@ function App() {
   //выход из аккаунта
   function handleLogout() {
     setIsLoggedIn(false);
+    localStorage.clear();
     localStorage.removeItem("token");
     localStorage.removeItem("allMovies");
     localStorage.removeItem("searchString");
-    localStorage.clear();
     navigate("/", { replace: true });
   };
 
@@ -129,13 +131,17 @@ function App() {
         .getContent(token)
         .then((res) => {
           if (res) {
-            setCurrentUser(res);
+            //setCurrentUser(res);
             setIsLoggedIn(true);
             navigate(pathname, { replace: true });
           }
         })
         .catch((err) => {
-          console.log(err);
+          if(err.includes(401)) {
+            setIsLoggedIn(false);
+            localStorage.clear();
+            console.log(err);
+          }
         });
     };
   };
@@ -176,6 +182,7 @@ function App() {
       setResultErrorMessage("");
       setIsLoading(false);
     } catch (err) {
+      setNotFound(false);
       setResultErrorMessage(ERROR_VALIDATION_MSG.SERVER_ERROR_SEARCH);
       console.log(err);
       setIsLoading(false);
@@ -194,29 +201,24 @@ function App() {
       
       if (checkbox) {
         localStorage.setItem("checkbox", checkbox);
-        setIsLoading(true);
         setFilteredMovies(searchedShortMovies);
         if (searchedShortMovies.length === 0) {
-          setNotFaund(false);
+          setNotFound(false);
           setResultMessage(ERROR_VALIDATION_MSG.NOTHING_SEARCHED);
         } else {
           setResultMessage("");
-          setNotFaund(true);
+          setNotFound(true);
         }
       } else {
-        setIsLoading(true);
         setFilteredMovies(searchedMovies);
         if (searchedMovies.length === 0) {
-          setNotFaund(false);
+          setNotFound(false);
           setResultMessage(ERROR_VALIDATION_MSG.NOTHING_SEARCHED);
         } else {
           setResultMessage("");
-          setNotFaund(true);
+          setNotFound(true);
         }
       }
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000)
   }
 
   const submitHandleAllFilms = (searchStr) => {
@@ -228,19 +230,16 @@ function App() {
   }
 
   useEffect(() => {
-    if (renderFilms.length) {
       handleSearchFilms();
-    } 
-    if (saveMovies.length) {
       handleSaveSearchFilms();
-    }
   }, [renderFilms, saveMovies, searchStr, searchSaveStr, checkbox, saveCheckbox]);
 
 
   //Фильтр поиска в сохраненных фильмах
   function handleSaveSearchFilms() {
     if (!saveMovies.length) {
-      return []
+      setFilteredSaveMovies([]);
+      return
     }
     const searchedMovies = filterMovies(searchSaveStr, saveMovies);
     const searchedShortMovies = searchedMovies.filter((film) => film.duration <= MAX_DURATION_SHORT_FILM);
@@ -248,29 +247,24 @@ function App() {
       
       if (saveCheckbox) {
         localStorage.setItem("saveCheckbox", saveCheckbox);
-        setIsLoading(true);
         setFilteredSaveMovies(searchedShortMovies);
         if (searchedShortMovies.length === 0) {
-          setNotFaund(false);
-          setResultMessage(ERROR_VALIDATION_MSG.NOTHING_SEARCHED);
+          setNotSaveFound(false);
+          setResultSaveMessage(ERROR_VALIDATION_MSG.NOTHING_SEARCHED);
         } else {
-          setResultMessage("");
-          setNotFaund(true);
+          setResultSaveMessage("");
+          setNotSaveFound(true);
         }
       } else {
-        setIsLoading(true);
         setFilteredSaveMovies(searchedMovies);
         if (searchedMovies.length === 0) {
-          setNotFaund(false);
-          setResultMessage(ERROR_VALIDATION_MSG.NOTHING_SEARCHED);
+          setNotSaveFound(false);
+          setResultSaveMessage(ERROR_VALIDATION_MSG.NOTHING_SEARCHED);
         } else {
-          setResultMessage("");
-          setNotFaund(true);
+          setResultSaveMessage("");
+          setNotSaveFound(true);
         }
       }
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000)
   };
 
   const submitHandler = (searchStr) => {
@@ -304,6 +298,7 @@ function App() {
       .deleteMovies(film._id)
       .then(() => {
         const saveFilms = saveMovies.filter((m) => m._id !== film._id);
+        console.log(saveFilms);
         setSaveMovies(saveFilms);
       })
       .catch((err) => {
@@ -336,7 +331,7 @@ function App() {
                   setCheckbox={setCheckbox}
                   resultMessage={resultMessage}
                   resultErrorMessage={resultErrorMessage}
-                  notFaund={notFaund}
+                  notFound={notFound}
                 />
               }
             />
@@ -356,8 +351,8 @@ function App() {
                   checkbox={saveCheckbox}
                   setCheckbox={setSaveCheckbox}
                   setSearchStr={setSearchSaveStr}
-                  resultMessage={resultMessage}
-                  notFaund={notFaund}
+                  resultSaveMessage={resultSaveMessage}
+                  notSaveFound={notSaveFound}
                 />
               } 
             />
