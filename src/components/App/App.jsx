@@ -40,6 +40,7 @@ function App() {
   const [errorUpdateInfoUser, setErrorUpdateInfoUser] = useState("");
   const [notFaund, setNotFaund] = useState(true);
   const [resultMessage, setResultMessage] = useState("");
+  const [resultErrorMessage, setResultErrorMessage] = useState("");
 
   useEffect(() => {
     checkToken();
@@ -65,7 +66,7 @@ function App() {
           setIsLoading(false);
         })
       }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn]);
 
   
   //АВТОРИЗАЦИЯ
@@ -172,10 +173,10 @@ function App() {
       const allMovies = await moviesApi.getAllMovies();
       localStorage.setItem("allMovies", JSON.stringify(allMovies));
       setRenderFilms(allMovies);
-      setResultMessage("");
+      setResultErrorMessage("");
       setIsLoading(false);
     } catch (err) {
-      setResultMessage(ERROR_VALIDATION_MSG.SERVER_ERROR_SEARCH);
+      setResultErrorMessage(ERROR_VALIDATION_MSG.SERVER_ERROR_SEARCH);
       console.log(err);
       setIsLoading(false);
     }
@@ -322,9 +323,9 @@ function App() {
               path="/movies"
               element={
                 <ProtectedRoute
-                isLoggedIn={isLoggedIn}
-                  element={Movies}
+                  isLoggedIn={isLoggedIn}
                   isLoading={isLoading}
+                  element={Movies}
                   submitHandleAllFilms={submitHandleAllFilms}
                   renderFilms={filteredMovies}
                   handleCheckboxClick={handleCheckboxClick}
@@ -334,6 +335,7 @@ function App() {
                   checkbox={checkbox}
                   setCheckbox={setCheckbox}
                   resultMessage={resultMessage}
+                  resultErrorMessage={resultErrorMessage}
                   notFaund={notFaund}
                 />
               }
