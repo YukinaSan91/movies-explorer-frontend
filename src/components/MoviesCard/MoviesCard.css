@@ -53,6 +53,10 @@
   transition: opacity .7s linear;
 }
 
+.card__btn-save_type_like {
+  background-image: url(../../images/like-icon-red.svg);
+}
+
 .card__btn-save:hover {
   opacity: .8;
   cursor: pointer;

@@ -1,11 +1,48 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import searchIcon from "../../images/search-icon.svg"
 import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
+import { useFormAndValidation } from "../../hooks/useFormAndValidation";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { ERROR_VALIDATION_MSG } from '../../utils/constants';
 
-function SearchForm() {
+function SearchForm({ onSubmit, handleCheckboxClick, checkbox }) {
+  const { pathname } = useLocation();
+  const {values, handleChange, isValid, setValues, setIsValid} = useFormAndValidation();
+  const [errorText, setErrorText] = useState("");
+
+  useEffect(() => {
+    setIsValid(true);
+  }, []);
+
+  useEffect(() => {
+    if (pathname === "/movies") {
+      setValues({
+        search: localStorage.getItem("searchString"),
+      });
+    }
+  }, [setValues]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    //if (values.search === "") {
+      //setErrorText(ERROR_VALIDATION_MSG.SEARCH_FORM_ERROR);
+      //return;
+    //} else {
+      //setErrorText("");
+      onSubmit(values.search || "");
+    //}
+    //if (isValid) {
+      //onSubmit(values.search || "");
+      //setErrorText("");
+    //}
+    //setErrorText(errors.search);
+  };
+
   return (
     <section className="search">
-      <form className="search__form">
+      <form className="search__form" onSubmit={handleSubmit}>
         <div className="search__container">
           <img className="search__img" src={searchIcon} alt="лупа"></img>
           <div className="search__input-conteiner">
@@ -14,17 +51,24 @@ function SearchForm() {
               className="search__input"
               type="text"
               name="search"
-              required
               placeholder="Фильм"
               autoComplete="off"
+              value={values.search || ""}
+              onChange={handleChange}
+              disabled={!isValid}
             />
-            <span className="input-search-error search__input-error"></span>
+            <span className={`${errorText ? "search__input-error search__input-error_visible " : "search__input-error"}`}>
+              {errorText}
+            </span>
           </div>
-          <button type="submit" className="search__btn">Найти</button>
+          <button type="submit" className="search__btn" disabled={!isValid}>Найти</button>
         </div>
         <div className="search__icon"></div>
         <div className="search__checkbox">
-          <FilterCheckbox />
+          <FilterCheckbox
+            handleCheckboxClick={handleCheckboxClick}
+            checkbox={checkbox}
+          />
         </div>
       </form>
     </section>

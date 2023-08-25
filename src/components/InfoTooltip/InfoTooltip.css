@@ -1,0 +1,125 @@
+.popup {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: all .7s ease;
+}
+
+.popup_opened {
+  display: flex;
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup__container {
+  margin: 0 auto;
+  padding: 0;
+  background: #272727;
+  max-width: 340px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  position: relative;
+}
+
+.popup__container_type_infotooltip {
+  width: 340px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup__close {
+  margin: 0;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  background-image: url(../../images/Close_icon.svg);
+  color: #fff;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-size: 32px;
+  object-fit: cover;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  border: none;
+  transition: opacity .5s linear;
+  cursor: pointer;
+}
+
+.popup__close:hover {
+  opacity: .6;
+}
+
+.popup__icon {
+  margin: 60px 0 32px 0;
+  padding: 0;
+  width: 120px;
+  height: 120px;
+  background-color: transparent;
+}
+
+.popup__heading {
+  margin: 0;
+  padding: 34px 0 44px 36px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  max-width: 330px;
+  width: 100%;
+  color: #fff;
+}
+
+.popup__heading_type_infotooltip {
+  margin: 0;
+  padding: 0px 0 60px 0;
+  width: 358px;
+  text-align: center;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .popup__container {
+     max-width: 282px;
+  }
+
+  .popup__close {
+    width: 20px;
+    height: 20px;
+    background-size: 20px;
+    top: -36px;
+    right: 0;
+  }
+
+  .popup__icon {
+    margin: 50px 0 40px 0;
+  }
+
+  .popup__heading {
+    margin: 0 auto;
+    padding: 25px 0 63px 0;
+    max-width: 238px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .popup__heading_type_infotooltip {
+    padding: 0px 0 48px 0;
+    max-width: 244px;
+  }
+}

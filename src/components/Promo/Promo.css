@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   background: #073042;
+  box-sizing: border-box;
 }
 
 .promo__container {

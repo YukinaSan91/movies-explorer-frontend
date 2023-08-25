@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   width: 100vh;
+  box-sizing: border-box;
 }
 
 .page-not-found__title {

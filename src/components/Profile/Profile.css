@@ -3,6 +3,7 @@
   padding: 0;
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .profile__form {
@@ -78,7 +79,7 @@
 
 .profile__buttons {
   margin: 0;
-  padding: 190px 0 0;
+  padding: 190px 0 70px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -114,12 +115,19 @@
   border: none;
   outline: none;
   transition: opacity .7s linear;
-  display: none;
 }
 
 .profile__btn-save:hover {
   opacity: .8;
   cursor: pointer;
+}
+
+.profile__btn-save_disabled {
+  background-color: #d9d9d9;
+  color: #000;
+  cursor: default;
+  pointer-events: none;
+  opacity: .2;
 }
 
 .profile__btn-edit {
