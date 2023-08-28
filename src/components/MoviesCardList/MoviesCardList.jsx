@@ -6,14 +6,18 @@ import { useEffect, useState } from "react";
 import {
   MOBILE_WIDTH,
   LAPTOP_WIDTH,
+  SMALL_LAPTOP_WIDTH,
+  MORE_TABLET_WIDTH,
   TABLET_WIDTH,
-  SMALL_MOBILE_WIDTH,
+  SMALL_TABLET_WIDTH,
+  EXTRA_LARGE_PAGE_CARDS_COUNT,
   LARGE_PAGE_CARDS_COUNT,
-  LARGE_NEXT_PAGE_CARDS_COUNT,
   MEDIUM_PAGE_CARDS_COUNT,
-  MEDIUM_NEXT_PAGE_CARDS_COUNT,
   SMALL_PAGE_CARDS_COUNT,
-  ADDING_PAGE_AMOUNT
+  EXTRA_LARGE_NEXT_PAGE_CARDS_COUNT,
+  LARGE_NEXT_PAGE_CARDS_COUNT,
+  MEDIUM_NEXT_PAGE_CARDS_COUNT,
+  SMALL_PAGE_AMOUNT
 } from "../../utils/constants";
 
 
@@ -24,54 +28,41 @@ function MoviesCardList({
   saveMovies,
 }) {
   const { pathname } = useLocation();
-  const [initialQuantityFilms, setInitialQuantityFilms] = useState(0);
+  const [initialQuantityFilms, setInitialQuantityFilms] = useState(EXTRA_LARGE_PAGE_CARDS_COUNT);
+  const [addCard, setAddCard] = useState(EXTRA_LARGE_NEXT_PAGE_CARDS_COUNT)
+  const [width, setWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    function getWidthBrowser() {
-      const width = window.innerWidth;
-      let newInitialQuantityFilms = 0;
-
-      if (pathname === "/movies") {
-        if (width >= LAPTOP_WIDTH) {
-          newInitialQuantityFilms = LARGE_PAGE_CARDS_COUNT;
-        } else if (width >= TABLET_WIDTH) {
-          newInitialQuantityFilms = MEDIUM_PAGE_CARDS_COUNT;
-        } else if (width >= SMALL_MOBILE_WIDTH && width <= TABLET_WIDTH) {
-          newInitialQuantityFilms = SMALL_PAGE_CARDS_COUNT;
-        }
-      } 
-      else {
-        newInitialQuantityFilms = movies.length;
-      }
-
-      setInitialQuantityFilms(newInitialQuantityFilms);
-    };
-
-    window.addEventListener("resize", getWidthBrowser);
-    getWidthBrowser();
-
-    return () => {
-      window.removeEventListener("resize", getWidthBrowser);
-    };
-  }, [movies.length, pathname]);
+  window.addEventListener("resize", function (e) {
+    setTimeout((e) => {
+      setWidth(window.innerWidth);
+    }, 100);
+  });
 
   function handleClickBtnMore() {
-    const width = window.innerWidth;
-    let addCards = 0;
+    setInitialQuantityFilms(initialQuantityFilms + addCard);
+  }
 
-    if (width >= LAPTOP_WIDTH) {
-      addCards = LARGE_NEXT_PAGE_CARDS_COUNT;
-    } else if (width >= TABLET_WIDTH) {
-      addCards = MEDIUM_NEXT_PAGE_CARDS_COUNT;
-    } else if (width >= SMALL_MOBILE_WIDTH && width <= MOBILE_WIDTH) {
-      addCards = ADDING_PAGE_AMOUNT;
+  useEffect(() => {
+    if (width < MOBILE_WIDTH) {
+      setInitialQuantityFilms(SMALL_PAGE_CARDS_COUNT);
+      setAddCard(SMALL_PAGE_AMOUNT);
+    } else if (width < SMALL_TABLET_WIDTH) {
+      setInitialQuantityFilms(SMALL_PAGE_CARDS_COUNT);
+      setAddCard(SMALL_PAGE_AMOUNT);
+    } else if (width < TABLET_WIDTH) {
+      setInitialQuantityFilms(MEDIUM_PAGE_CARDS_COUNT);
+      setAddCard(MEDIUM_NEXT_PAGE_CARDS_COUNT);
+    } else if (width < MORE_TABLET_WIDTH) {
+      setInitialQuantityFilms(MEDIUM_PAGE_CARDS_COUNT);
+      setAddCard(MEDIUM_NEXT_PAGE_CARDS_COUNT);
+    } else if (width < SMALL_LAPTOP_WIDTH) {
+      setInitialQuantityFilms(LARGE_PAGE_CARDS_COUNT);
+      setAddCard(LARGE_NEXT_PAGE_CARDS_COUNT);
+    } else if (width < LAPTOP_WIDTH) {
+      setInitialQuantityFilms(EXTRA_LARGE_PAGE_CARDS_COUNT);
+      setAddCard(EXTRA_LARGE_NEXT_PAGE_CARDS_COUNT);
     }
-
-    setInitialQuantityFilms((viewInitialQuantityFilms) => {
-      const newInitialQuantityFilms = viewInitialQuantityFilms + addCards;
-      return newInitialQuantityFilms;
-    });
-  };
+  }, [width]);
 
   return (
     <section className="cards">

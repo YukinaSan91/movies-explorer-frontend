@@ -6,19 +6,18 @@ import { ERROR_VALIDATION_MSG } from '../../utils/constants';
 
 function Profile({ onLogout, onUpdateUserProfile, errorUpdateInfoUser, buttonText }) {
   const currentUser = useContext(CurrentUserContext);
-  const {values, handleChange, isValid, resetForm, setValues} = useFormAndValidation();
+  const {values, handleChange, isValid, setValues} = useFormAndValidation();
   const [disabledInput, setDisabledInput] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (currentUser) {
-      resetForm();
       setValues({
         name: currentUser.name,
         email: currentUser.email
       });
     }
-  }, [currentUser, resetForm, setValues]);
+  }, [currentUser, setValues]);
 
   function profileError() {
     setError("");
@@ -95,8 +94,11 @@ function Profile({ onLogout, onUpdateUserProfile, errorUpdateInfoUser, buttonTex
             ? <button type="button" className="profile__btn-edit" onClick={handleChangeEdit}>Редактировать</button>
             : <button
                 type="submit"
-                className={`profile__btn-save ${isValid ? "" : "profile__btn-save_disabled"}`}
-                disabled={!isValid || (values.name===currentUser.name && values.email===currentUser.email)}>
+                className={
+                  `profile__btn-save ${!isValid || (values.name === currentUser.name && values.email === currentUser.email)
+                    ? "profile__btn-save_disabled" 
+                    : "" }`}
+                disabled={!isValid || (values.name === currentUser.name && values.email === currentUser.email)}>
                   {buttonText}
               </button>
           }

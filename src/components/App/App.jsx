@@ -20,30 +20,43 @@ import InfoTooltip from "../InfoTooltip/InfoTooltop";
 import { ERROR_VALIDATION_MSG, MAX_DURATION_SHORT_FILM } from '../../utils/constants';
 
 function App() {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate(); //навигация
+  const { pathname } = useLocation(); //навигация
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false); //состояние залогинен пользователь или нет
+  const [isLoading, setIsLoading] = useState(false); //состояние загрузки
+
+  const [currentUser, setCurrentUser] = useState({}); //данные пользователя
+  
   const [renderFilms, setRenderFilms] = useState([]); //массив всех фильмов
   const [saveMovies, setSaveMovies] = useState([]); //массив сохраненных фильмов
-  const [checkbox, setCheckbox] = useState(false); //чекбокс
+
+  const [checkbox, setCheckbox] = useState(JSON.parse(localStorage.getItem("checkbox"))); //чекбокс
   const [saveCheckbox, setSaveCheckbox] = useState(false)// чекбокс сохраненных фильмов
+
   const [filteredMovies, setFilteredMovies] = useState([]); //фильтрация массива всех фильмов
   const [filteredSaveMovies, setFilteredSaveMovies] = useState([]); //фильтрация массива сохраненных фильмов
+
   const [searchStr, setSearchStr] = useState(""); //поиск в фильмах
   const [searchSaveStr, setSearchSaveStr] = useState(""); //поиск в сохраненных фильмах
-  const [registrationError, setRegistrationError] = useState("");
-  const [loginError, setLoginError] = useState("");
-  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
-  const [isSuccessful, setIsSuccessful] = useState(false);
-  const [errorUpdateInfoUser, setErrorUpdateInfoUser] = useState("");
-  const [notFound, setNotFound] = useState(true);
-  const [notSaveFound, setNotSaveFound] = useState(true)
-  const [resultMessage, setResultMessage] = useState("");
-  const [resultSaveMessage, setResultSaveMessage] = useState("");
-  const [resultErrorMessage, setResultErrorMessage] = useState("");
 
+  const [registrationError, setRegistrationError] = useState(""); //ошибки регистрации
+  const [loginError, setLoginError] = useState(""); //ошибки логина
+
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false); //открытие попапа
+  const [isSuccessful, setIsSuccessful] = useState(false); //состояние попапа
+
+  const [errorUpdateInfoUser, setErrorUpdateInfoUser] = useState(""); //ошибки профиля пользователя
+
+  const [notFound, setNotFound] = useState(true); //состояние ошибки "ничего не найдено" на странице фильмов
+  const [notSaveFound, setNotSaveFound] = useState(true) //состояние ошибки "ничего не найдено" на странице сохраненных фильмов
+
+  const [resultMessage, setResultMessage] = useState(""); //ошибка "ничего не найдено" в фильмах
+  const [resultSaveMessage, setResultSaveMessage] = useState(""); //ошибка "ничего не найдено" в сохраненных фильмах
+
+  const [resultErrorMessage, setResultErrorMessage] = useState(""); //ошибка сервера при получении карточек со стороннего апи
+
+  //запускаем проверку токена
   useEffect(() => {
     checkToken();
   }, []);
@@ -59,6 +72,7 @@ function App() {
           setSaveMovies(film.filter((newFilm) => newFilm.owner === currentUser._id));
           setRenderFilms(JSON.parse(localStorage.getItem("allMovies")) || []);
           setSearchStr((localStorage.getItem("searchString")) || "");
+          //setCheckbox((localStorage.getItem("checkbox")) || false)
           setIsLoading(false);
         })
         .catch((err) => {
@@ -197,7 +211,6 @@ function App() {
 
     const searchedMovies = filterMovies(searchStr, renderFilms);
     const searchedShortMovies = searchedMovies.filter((film) => film.duration <= MAX_DURATION_SHORT_FILM);
-
       
       if (checkbox) {
         localStorage.setItem("checkbox", checkbox);
@@ -210,6 +223,7 @@ function App() {
           setNotFound(true);
         }
       } else {
+        localStorage.setItem("checkbox", checkbox);
         setFilteredMovies(searchedMovies);
         if (searchedMovies.length === 0) {
           setNotFound(false);
@@ -230,9 +244,14 @@ function App() {
   }
 
   useEffect(() => {
-      handleSearchFilms();
+    handleSearchFilms();
+    //handleSaveSearchFilms();
+}, [renderFilms, searchStr, checkbox]);
+
+  useEffect(() => {
+      //handleSearchFilms();
       handleSaveSearchFilms();
-  }, [renderFilms, saveMovies, searchStr, searchSaveStr, checkbox, saveCheckbox]);
+  }, [saveMovies, searchSaveStr, saveCheckbox]);
 
 
   //Фильтр поиска в сохраненных фильмах
@@ -272,6 +291,7 @@ function App() {
   };
 
     //Чекбокс
+
     function handleCheckboxClick() {
       setCheckbox(prev => !prev);
     };

@@ -19,7 +19,6 @@ function Movies({
   notFound
 }) {
 
-  console.log(resultMessage);
   return (
     <section className="movies">
       <SearchForm

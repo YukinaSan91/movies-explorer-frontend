@@ -6,13 +6,12 @@ import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 import { REGEXP_EMAIL, REGEXP_NAME } from "../../utils/constants";
 
 function Register({ onRegister }) {
-  const {values, handleChange, errors, isValid, resetForm} = useFormAndValidation();
+  const {values, handleChange, errors, isValid} = useFormAndValidation();
 
   function handleRegisterSubmit(evt) {
     evt.preventDefault();
     const { name, email, password } = values;
     onRegister(name, email, password);
-    resetForm();
   };
 
   return (

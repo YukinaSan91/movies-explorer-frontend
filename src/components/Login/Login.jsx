@@ -5,13 +5,12 @@ import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 import { REGEXP_EMAIL } from "../../utils/constants";
 
 function Login({ onLogin }) {
-  const {values, handleChange, errors, isValid, resetForm} = useFormAndValidation();
+  const {values, handleChange, errors, isValid} = useFormAndValidation();
 
   function handleLoginSubmit(evt) {
     evt.preventDefault();
     const { email, password } = values;
     onLogin(email, password);
-    resetForm();
   }
 
   return (
