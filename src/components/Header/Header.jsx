@@ -5,7 +5,7 @@ import NavAuth from "../NavAuth/NavAuth";
 import Navigation from "../Navigation/Navigation";
 
 
-function Header() {
+function Header({ isLoggedIn }) {
   const { pathname } = useLocation();
 
   return (
@@ -13,7 +13,7 @@ function Header() {
       <Link to="/" className="header__link">
         <img className="header__logo" src={headerLogo} alt="Логотип" />
       </Link>
-      {pathname !== "/" ? <Navigation /> : <NavAuth />}
+      {isLoggedIn ? <Navigation /> : <NavAuth />}
     </header>
   );
 };

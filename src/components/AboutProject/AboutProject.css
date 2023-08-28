@@ -6,6 +6,7 @@
   flex-wrap: nowrap;
   max-width: 1140px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .project__title {
